@@ -7,7 +7,7 @@ Version 1.1 by KuJoe (JMD.cc)<br />
 PHP5 and SQLite3 support (might work with over versions but I've only used the script PHP 5.4 with SQLite3 support)
 
 //Installation:<br />
-1) Upload the the PHP files to a web accessible directory.<br />
+1) Upload the the PHP and CSS files to a web accessible directory.<br />
 2) Navigate to the install.php file in your browser.
 
 //Recommended:<br />

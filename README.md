@@ -1,5 +1,7 @@
 Simple PHP and SQLite3 script for **K**eeping **T**rack **o**f **Y**our hosting, VPS, and dedicated **S**ervices.<br />
-Version 1.0 by KuJoe (JMD.cc)
+Version 1.1 by KuJoe (JMD.cc)<br />
+
+1.1 - Fixed bug where SQLite3 database was being held open preventing updating from view.php
 
 //Requirements:<br />
 PHP5 and SQLite3 support (might work with over versions but I've only used the script PHP 5.4 with SQLite3 support)

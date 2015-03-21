@@ -1,7 +1,7 @@
 <?php
 /**
 Simple PHP and SQLite3 script for keeping track of your hosting, VPS, and dedicated services.
-Version 1.1 by KuJoe (JMD.cc)
+Version 1.2 by KuJoe (JMD.cc)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
@@ -11,7 +11,9 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 **/
 
 function sqlite_escape_string($string){
-    return SQLite3::escapeString($string);
+    $string = SQLite3::escapeString($string);
+	$string = filter_var($string, FILTER_SANITIZE_STRING);
+	return $string;
 }
 
 function dbinsert($name, $provider, $city, $state, $country, $datacenter, $cost, $cycle, $start, $due, $ram, $swap, $cpu, $cpunum, $cpuclock, $bw, $port, $disk, $disktype, $ipv4, $ipv6, $notes) {
@@ -62,6 +64,7 @@ function dbupdate($name, $provider, $city, $state, $country, $datacenter, $cost,
 		}
 	}
 	if($valid) {
+		$sid = sqlite_escape_string($sid);
 		$name = sqlite_escape_string($name);
 		$provider = sqlite_escape_string($provider);
 		$city = sqlite_escape_string($city);
@@ -93,16 +96,10 @@ function dbupdate($name, $provider, $city, $state, $country, $datacenter, $cost,
 }
 
 function dbdel($sid) {
-		$db = new SQLite3('ktoys.db3');
-		$db->exec("DELETE FROM services WHERE sid='$sid'");
-		return true;
-}
-
-function getLatency($server) {
-	require('Ping.php');
-	$ping = new Ping($server);
-	$latency = $ping->ping();
-	return $latency;
+	$sid = sqlite_escape_string($sid);
+	$db = new SQLite3('ktoys.db3');
+	$db->exec("DELETE FROM services WHERE sid='$sid'");
+	return true;
 }
 
 ?>

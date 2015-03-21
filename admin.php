@@ -1,7 +1,7 @@
 <?php
 /**
 Simple PHP and SQLite3 script for keeping track of your hosting, VPS, and dedicated services.
-Version 1.1 by KuJoe (JMD.cc)
+Version 1.2 by KuJoe (JMD.cc)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
@@ -50,7 +50,7 @@ if (!file_exists($filename)) {
 			echo "<div style=\"width:100%;text-align:center;font-weight:bold;padding:10px 0;\">Failed. Please make sure all fields are filled out.";
 		}
 	}
-	if(isset($_POST['delsid'])) {
+	if(isset($_POST['delsid']) AND is_numeric($_POST['delsid'])) {
 		$delete = dbdel($_POST['delsid']);
 		if ($delete == true) {
 			echo "<div style=\"width:100%;text-align:center;font-weight:bold;padding:10px 0;\">Success!</div>";

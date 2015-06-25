@@ -1,3 +1,4 @@
+<?php
 /**
 Simple PHP and SQLite3 script for keeping track of your hosting, VPS, and dedicated services.
 By KuJoe (JMD.cc)
@@ -9,52 +10,20 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 **/
 
-body {
-	margin: 0;
-	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-	font-size: 14px;
-	line-height: 20px;
-	color: #333333;
-	background-color: #ffffff;
-	text-align: center;
+$filename = './ktoys.db3';
+if (!file_exists($filename)) {
+    die('Database does not exist. Run the installer again.');
 }
-
-a {
-	color: #0088cc;
-	text-decoration: none;
+require('functions.php');
+$db = new SQLite3('ktoys.db3');
+$result = $db->query('SELECT * FROM services') or die('Query failed');
+$arr = array();
+while ($row = $result->fetchArray()) {
+	$arr[] = $row['sid'];
 }
-
-a:hover {
-	color: #005580;
-	text-decoration: underline;
+$db->close();
+foreach ($arr as $value) {
+    chkDueDate($value);
 }
-
-.container{
-	display: inline-block;
-	zoom: 1;
-	display*: inline; /* ie hack */
-}
-
-#invtable{
-	font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
-	width: 100%;
-	border-collapse:collapse;
-	text-align: center;
-}
-
-#invtable td, #invtable th {
-	font-size:1em;
-	border-bottom: 1px solid #e7e7e7;
-	border-right: 1px solid #e7e7e7;
-	border-top: 1px solid #ececec;
-	border-left: 1px solid #ececec;
-	padding:2px 3px;
-}
-
-#invtable th {
-	font-size:1.1em;
-	padding-top:5px;
-	padding-bottom:4px;
-	background: #000000 url(./thead_bg.gif) bottom left repeat-x;
-	color:#ffffff;
-}
+echo "Completed";
+?>

@@ -1,7 +1,6 @@
 <?php
 /**
 Simple PHP and SQLite3 script for keeping track of your hosting, VPS, and dedicated services.
-Version 1.2 by KuJoe (JMD.cc)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
@@ -100,6 +99,41 @@ function dbdel($sid) {
 	$db = new SQLite3('ktoys.db3');
 	$db->exec("DELETE FROM services WHERE sid='$sid'");
 	return true;
+}
+
+function chkDueDate($sid) {
+	$sid = sqlite_escape_string($sid);
+	$db = new SQLite3('ktoys.db3');
+	$result = $db->querySingle('SELECT * FROM services WHERE sid='.$sid.' LIMIT 1', true);
+	if(empty($result["due"]) OR $result["due"] == '00/00/0000') {
+		return;
+	} else {
+		$cycle = $result["cycle"];
+		$duedate = date('Y-m-d', strtotime($result["due"]));
+		$date = new DateTime($duedate);
+		$now = new DateTime();
+		$db->close();
+		if($date < $now) {
+			if($cycle == 'Monthly') {
+				$newdue = date('m/d/Y',strtotime("$duedate + 1 month"));
+			} elseif($cycle == 'Quarterly') {
+				$newdue = date('m/d/Y',strtotime("$duedate + 3 months"));
+			} elseif($cycle == 'Semiannually') {
+				$newdue = date('m/d/Y',strtotime("$duedate + 6 months"));
+			} elseif($cycle == 'Annually') {
+				$newdue = date('m/d/Y',strtotime("$duedate + 1 years"));
+			} elseif($cycle == 'Biennially') {
+				$newdue = date('m/d/Y',strtotime("$duedate + 2 years"));
+			} elseif($cycle == 'Triennially') {
+				$newdue = date('m/d/Y',strtotime("$duedate + 3 years"));
+			} else {
+				$newdue = '00/00/0000';
+			}
+			$db = new SQLite3('ktoys.db3');
+			$db->exec("UPDATE services SET due = '$newdue' WHERE sid = '$sid'");
+			$db->close();
+		}
+	}
 }
 
 ?>

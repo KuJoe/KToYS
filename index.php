@@ -45,7 +45,7 @@ if (!file_exists($filename)) {
 	<div class="container">
 	<h2>Keep Track of Your Services!</h2>
 	<p><input type="checkbox" name="sid" checked="checked" /> Service ID <input type="checkbox" name="name" checked="checked" /> Service Name <input type="checkbox" name="provider"  checked="checked" /> Provider <input type="checkbox" name="datacenter" checked="checked" /> Datacenter <input type="checkbox" name="location" checked="checked" /> Location <input type="checkbox" name="cost" /> Cost <input type="checkbox" name="cycle" /> Billing Cycle <input type="checkbox" name="start" /> Start Date <input type="checkbox" name="due" checked="checked" /> Due Date<br />
-	<input type="checkbox" name="ram" /> RAM <input type="checkbox" name="swap" /> SWAP <input type="checkbox" name="cpu" /> CPU Info <input type="checkbox" name="bw" /> Bandwidth <input type="checkbox" name="port" /> Port Speed <input type="checkbox" name="disk" /> Disk Space <input type="checkbox" name="disktype" /> Disk Type <input type="checkbox" name="ipv4" /> IPv4 Addresses <input type="checkbox" name="ipv6" /> IPv6 Addresses <input type="checkbox" name="notes" /> Notes <input type="checkbox" name="added" /> Added <input type="checkbox" name="updated"/> Updated</p>
+	<input type="checkbox" name="ram" /> RAM <input type="checkbox" name="swap" /> SWAP <input type="checkbox" name="cpu" /> CPU Info <input type="checkbox" name="bw" /> Bandwidth <input type="checkbox" name="port" /> Port Speed <input type="checkbox" name="disk" /> Disk Space <input type="checkbox" name="disktype" /> Disk Type <input type="checkbox" name="ipv4" /> IPv4 Addresses <input type="checkbox" name="ipv6" /> IPv6 Addresses <input type="checkbox" name="notes" /> Notes <input type="checkbox" name="services" /> Services <input type="checkbox" name="added" /> Added <input type="checkbox" name="updated"/> Updated</p>
 	<table id="invtable">
 	<tr>
 	<th class="sid">Server ID</th>
@@ -67,6 +67,7 @@ if (!file_exists($filename)) {
 	<th class="ipv4">IPv4 Addresses</th>
 	<th class="ipv6">IPv6 Addresses</th>
 	<th class="notes">Notes</th>
+	<th class="services">Services</th>
 	<th class="added">Added</th>
 	<th class="updated">Updated</th></tr>
 <?php
@@ -94,9 +95,10 @@ while ($row = $result->fetchArray()) {
 			<td class=\"port\">{$row['port']}</td>
 			<td class=\"disk\">{$row['disk']}</td>
 			<td class=\"disktype\">{$row['disktype']}</td>
-			<td class=\"ipv4\">{$row['ipv4']}</td>
-			<td class=\"ipv6\">{$row['ipv6']}</td>
-			<td class=\"notes\">{$row['notes']}</td>
+			<td class=\"ipv4\">".nl2br($row['ipv4'])."</td>
+			<td class=\"ipv6\">".nl2br($row['ipv6'])."</td>
+			<td class=\"notes\">".nl2br($row['notes'])."</td>
+			<td class=\"services\">".nl2br($row['services'])."</td>
 			<td class=\"added\">{$row['added']}</td>
 			<td class=\"updated\">{$row['updated']}</td>
 			</tr>";

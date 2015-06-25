@@ -11,20 +11,14 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 **/
 
 if (file_exists('INSTALL.LOCK')) {
-    die('Looks like you already ran the install once. If the install ran successfully delete the install.php file, if not delete the INSTALL.LOCK file and re-run the install.');
+    die('Please delete the the INSTALL.LOCK file and re-run this upgrade file.');
 } else {
 	try {
-		//Create the database
 		$db = new SQLite3('ktoys.db3');
-		echo "Database has been created.<br />";
-		//Create the services table
-		$db->exec('CREATE TABLE services (sid INTEGER PRIMARY KEY, name VARCHAR(255), provider VARCHAR(255), city VARCHAR(255), state VARCHAR(255), country VARCHAR(255), datacenter VARCHAR(255), cost VARCHAR(11), cycle VARCHAR(255), start DATETIME, due TIMESTAMP, ram VARCHAR(255), swap VARCHAR(255), cpu VARCHAR(255), cpunum INTEGER, cpuclock VARCHAR(11), bw VARCHAR(255), port VARCHAR(255), disk VARCHAR(255), disktype VARCHAR(255), ipv4 TEXT, ipv6 TEXT, notes TEXT, services TEXT, added DATETIME DEFAULT CURRENT_TIMESTAMP, updated DATETIME DEFAULT CURRENT_TIMESTAMP)');
-		$db->exec("CREATE TRIGGER update_time AFTER UPDATE ON services
-		BEGIN 
-			update services SET updated = datetime('now') WHERE sid = NEW.sid;
-		END;");
-		echo "Table services has been created.<br />";
-		//Close database connection and lock install
+		// Database update for version 1.4
+		$db->exec('ALTER TABLE services ADD COLUMN services TEXT');
+		echo "Services column added per version 1.4<br />";
+
 		$db = NULL;
 		fopen("INSTALL.LOCK", "w");
 		if (file_exists('INSTALL.LOCK')) {
@@ -32,7 +26,7 @@ if (file_exists('INSTALL.LOCK')) {
 		} else {
 			echo "INSTALL.LOCK creation failed.<br />(Either create a blank one in the same directory as install.php or delete all install & upgrade files.)";
 		}
-		echo '<br /><br />Install completed. <a href="index.php">THIS PAGE SHOULD WORK NOW.</a>';
+		echo '<br /><br />Upgrade for version 1.4 completed.';
 	}
 	catch(PDOException $e) {
 		print 'Exception : '.$e->getMessage();

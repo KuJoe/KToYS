@@ -43,7 +43,7 @@ if (!file_exists($filename)) {
 <?php
 	require('functions.php');
 	if(isset($_POST['name'])) {
-		$insert = dbinsert($_POST['name'], $_POST['provider'], $_POST['city'], $_POST['state'], $_POST['country'], $_POST['datacenter'], $_POST['cost'], $_POST['cycle'], $_POST['start'], $_POST['due'], $_POST['ram'], $_POST['swap'], $_POST['cpu'], $_POST['cpunum'], $_POST['cpuclock'], $_POST['bw'], $_POST['port'], $_POST['disk'], $_POST['disktype'], $_POST['ipv4'], $_POST['ipv6'], $_POST['notes']);
+		$insert = dbinsert($_POST['name'], $_POST['provider'], $_POST['city'], $_POST['state'], $_POST['country'], $_POST['datacenter'], $_POST['cost'], $_POST['cycle'], $_POST['start'], $_POST['due'], $_POST['ram'], $_POST['swap'], $_POST['cpu'], $_POST['cpunum'], $_POST['cpuclock'], $_POST['bw'], $_POST['port'], $_POST['disk'], $_POST['disktype'], $_POST['ipv4'], $_POST['ipv6'], $_POST['notes'], $_POST['services']);
 		if ($insert == true) {
 			echo "<div style=\"width:100%;text-align:center;font-weight:bold;padding:10px 0;\">Success!</div>";
 		} else {
@@ -99,6 +99,7 @@ if (!file_exists($filename)) {
 			<tr><th>IPv4 Addresses</th><td colspan="3"><textarea rows="4" cols="50" name="ipv4"></textarea></td></tr>
 			<tr><th>IPv6 Addresses</th><td colspan="3"><textarea rows="4" cols="50" name="ipv6"></textarea></td></tr>
 			<tr><th>Additional Notes</th><td colspan="3"><textarea rows="4" cols="50" name="notes"></textarea></td></tr>
+			<tr><th>Services</th><td colspan="3"><textarea rows="4" cols="50" name="services"></textarea></td></tr>
 	</table>
 	<i>All fields must be filled out! If it does not apply put "none", "0", "NA", or something like that.</i>
 	<center><input name="addsrv" type="submit" value="Add Service"></center>

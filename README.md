@@ -6,6 +6,7 @@ Version 1.3 by KuJoe (JMD.cc)<br />
 1.3 - Viewing the index.php page automatically checks and updates the Due Date for each service (I apologize ahead of time for those order services on the 29th, 30th, or 31st of a month and my logic doesn't work properly for you).<br />
       Adjusted the default checked boxes on index.php to show the Due Date column and remove the Added and Updated columns.<br />
 	  The Due Date cell is highlighted yellow if the due date is this month.<br />
+1.4 - Added new field for services (i.e. HTTP, DNS, MySQL, SSH, etc...) as requested by Cronus89.
 
 //Demo<br />
 Demo: http://iam.clouded.us/ktoys/index.php
@@ -19,6 +20,7 @@ PHP5 and SQLite3 support (might work with over versions but I've only used the s
 
 //Upgrading:<br />
 1) Overwrite the current PHP files in the directory (install.php is not needed).
+2) If there is an associated upgrade file (i.e. upgrade_1_4.php would be for version 1.4) then delete the INSTALL.LOCK file and run that upgrade file. If there is more than one upgrade file make sure to run them in order and delete the INSTALL.LOCK file between upgrades.
 
 //Recommended:<br />
 ******At this time there is no password authentication or anything preventing somebody else from using this script on your website and altering your database. Please do one of the following.******<br />

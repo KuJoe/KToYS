@@ -12,8 +12,46 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 $filename = './ktoys.db3';
 if (!file_exists($filename)) {
-    die('Database does not exist. Run the installer again.');
+	die('Database does not exist. Run the installer again.');
 }
+
+//grab database information
+$db = new SQLite3('ktoys.db3');
+$result = $db->query('SELECT * FROM services') or die('Query failed');
+
+/*
+* check if it is a request for JSON data
+* 
+* JSON data makes it easier for data fetching for mobile apps
+*
+* eg: POST http://www.example.com/ktoys/index.php?type=json
+*/
+if (isset($_POST["type"]) && htmlspecialchars($_POST["type"]) == "json", ENT_QUOTES, "UTF-8") {
+	//report JSON data
+
+	$dataArray = array();
+	$i = 0;
+	while($res = $result->fetchArray(SQLITE3_ASSOC)){
+		if(!isset($res['sid'])) continue;
+		
+		//insert details accordingly
+		$row[$i][] = $res;
+		$row[$i]['location'] = $row['city'] . ", " . $row['state'] ", " . $row['country'];
+		$row[$i]['cpu'] = $row['cpu'] . " @" . $row['cpuclock'] " (x" . $row['cpunum'] . ")";
+		//new lines insertion
+		$row[$i]['ipv4'] = nl2br($row['ipv4']);
+		$row[$i]['ipv6'] = nl2br($row['ipv6']);
+		$row[$i]['notes'] = nl2br($row['notes']);
+		$row[$i]['services'] = nl2br($row['services']);
+
+		$i++;
+	}
+	
+	//output the json data
+	header("Content-type: application/json");
+	echo json_encode ($dataArray);
+} else {
+	//report HTML data
 ?>
 <html>
 <head>
@@ -71,8 +109,6 @@ if (!file_exists($filename)) {
 	<th class="added">Added</th>
 	<th class="updated">Updated</th></tr>
 <?php
-$db = new SQLite3('ktoys.db3');
-$result = $db->query('SELECT * FROM services') or die('Query failed');
 while ($row = $result->fetchArray()) {
 	#echo "<tr><td>".var_dump($row)."</td></tr>"; //Debugging
 	echo "	<tr><td class=\"sid\"><a href=\"view.php?id={$row['sid']}\">{$row['sid']}</a></td>
@@ -111,4 +147,6 @@ while ($row = $result->fetchArray()) {
 	<a href="https://github.com/KuJoe/KToYS" target="_blank">By KuJoe</a>
 </body>
 </html>
-<?php include('job.php'); ?>
+<?php
+} //end of HTML data reporting
+include('job.php'); ?>

@@ -1,5 +1,5 @@
 Simple PHP and SQLite3 script for **K**eeping **T**rack **o**f **Y**our hosting, VPS, and dedicated **S**ervices.<br />
-Version 1.3 by KuJoe (JMD.cc)<br />
+Version 1.6 by KuJoe (JMD.cc)<br />
 
 1.1 - Fixed bug where SQLite3 database was being held open preventing updating from view.php<br />
 1.2 - Some security fixes in case somebody leaves this in a public directory or doesn't know what HTML is.<br />
@@ -7,6 +7,8 @@ Version 1.3 by KuJoe (JMD.cc)<br />
       Adjusted the default checked boxes on index.php to show the Due Date column and remove the Added and Updated columns.<br />
 	  The Due Date cell is highlighted yellow if the due date is this month.<br />
 1.4 - Added new field for services (i.e. HTTP, DNS, MySQL, SSH, etc...) as requested by Cronus89.
+1.5 - Added the ability to retrieve data using JSON (contributed by GIANTCRAB).
+1.6 - Added an import feature to make it easier to add and update services (see additional info below).
 
 //Demo<br />
 Demo: http://iam.clouded.us/ktoys/index.php
@@ -30,3 +32,20 @@ B) Put this in a random directory that only you know about.
 
 //Known Bugs:<br />
 1) Invoices due on the 29th, 30th, or 31st will update to the incorrect date if the following month does not have that many days in it. I tried some workarounds I found online but in the end I gave up so for a few months a year you might have to manually adjust your due date.
+
+//Importing:<br />
+To import a new service without manually filling out the fields, you can generate a comma separated string like this (most of this data can be pulled off a single page from WHMCS) to input at the bottom of the Admin page:<br />
+name,provider,city,state,country,datacenter,cost,billing_cycle,start_date,due_date,bandwidth,port_speed,disk_type<br />
+If you do not know a value or there is no value leave a blank space between the commas (you must have 12 commas for this to work).<br /><br />
+Some values are from a list and using other values will break something somewhere so here are those values:<br />
+billing_cycle = Hourly, Daily, Weekly, Monthly, Bimonthly, Quarterly, Semiannually, Annually, Biennially, Triennially, Other<br />
+disk_type = SATA, SAS, SSD, SAN, Other, Unknown<br /><br />
+Date specific values (start_date & due_date) must be in MM/DD/YYYY format or it will break something somewhere.<br />
+<br />
+Once you have the service added, you can import the service specs by generating a comma separated string provided by the export.sh script included.<br />
+Copy the export.sh script to your service and run it (sh export.sh), then copy and paste the output into the "Import Service Specs" input on the View page of that service.<br />
+The export might not be perfect, so you can edit or create you own using this template:<br />
+ram,swap,cpu,number_of_cpus,cpu_clock_speed,disk_space,ipv4_addresses,ipv6_addresses<br />
+If you do not know a value or there is no value leave a blank space between the commas (you must have 7 commas for this to work).<br />
+Here is an example of the output from the script:<br />
+128,128,Intel(R) Xeon(R) CPU E5-2630 v3 @ 2.40GHz,1,2400MHz,2,11.22.33.44 ,1111:2222:3333:4444::beef/128

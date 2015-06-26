@@ -42,12 +42,22 @@ if (!file_exists($filename)) {
 	<div class="container">
 <?php
 	require('functions.php');
-	if(isset($_POST['name'])) {
-		$insert = dbinsert($_POST['name'], $_POST['provider'], $_POST['city'], $_POST['state'], $_POST['country'], $_POST['datacenter'], $_POST['cost'], $_POST['cycle'], $_POST['start'], $_POST['due'], $_POST['ram'], $_POST['swap'], $_POST['cpu'], $_POST['cpunum'], $_POST['cpuclock'], $_POST['bw'], $_POST['port'], $_POST['disk'], $_POST['disktype'], $_POST['ipv4'], $_POST['ipv6'], $_POST['notes'], $_POST['services']);
-		if ($insert == true) {
-			echo "<div style=\"width:100%;text-align:center;font-weight:bold;padding:10px 0;\">Success!</div>";
+	if(isset($_POST['import'])) {
+		$import = $_POST['import'];
+		$arr = explode(',', $import);
+		$run = srvimport($arr['0'],$arr['1'],$arr['2'],$arr['3'],$arr['4'],$arr['5'],$arr['6'],$arr['7'],$arr['8'],$arr['9'],$arr['10'],$arr['11'],$arr['12'],$arr['13']);
+		if ($run == true) {
+			echo "<div style=\"width:100%;text-align:center;font-weight:bold;padding:10px 0;\">Import Successful!</div>";
 		} else {
-			echo "<div style=\"width:100%;text-align:center;font-weight:bold;padding:10px 0;\">Failed. Please make sure all fields are filled out.";
+			echo "<div style=\"width:100%;text-align:center;font-weight:bold;padding:10px 0;\">Import Failed.";
+		}
+	}
+	if(isset($_POST['name'])) {
+		$run = dbinsert($_POST['name'], $_POST['provider'], $_POST['city'], $_POST['state'], $_POST['country'], $_POST['datacenter'], $_POST['cost'], $_POST['cycle'], $_POST['start'], $_POST['due'], $_POST['ram'], $_POST['swap'], $_POST['cpu'], $_POST['cpunum'], $_POST['cpuclock'], $_POST['bw'], $_POST['port'], $_POST['disk'], $_POST['disktype'], $_POST['ipv4'], $_POST['ipv6'], $_POST['notes'], $_POST['services']);
+		if ($run == true) {
+			echo "<div style=\"width:100%;text-align:center;font-weight:bold;padding:10px 0;\">Creation Successful!</div>";
+		} else {
+			echo "<div style=\"width:100%;text-align:center;font-weight:bold;padding:10px 0;\">Creation Failed. Please make sure all fields are filled out.";
 		}
 	}
 	if(isset($_POST['delsid']) AND is_numeric($_POST['delsid'])) {
@@ -103,6 +113,12 @@ if (!file_exists($filename)) {
 	</table>
 	<i>All fields must be filled out! If it does not apply put "none", "0", "NA", or something like that.</i>
 	<center><input name="addsrv" type="submit" value="Add Service"></center>
+	</form>
+	<br />
+	<form name="form" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+	Put the details in comma separated format using the following template (see README for details):<br />name,provider,city,state,country,datacenter,cost,billing_cycle,start_date,due_date,bandwidth,port_speed,disk_type<br />
+	<input name="import" type="text" id="import" size="100" placeholder="name,provider,city,state,country,datacenter,cost,billing_cycle,start_date,due_date,bandwidth,port_speed,disk_type">
+	<center><input name="importsrv" type="submit" value="Import Service"></center>
 	</form>
 	<br />
 	<form name="form" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">

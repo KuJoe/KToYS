@@ -47,12 +47,22 @@ if (!file_exists($filename)) {
 		exit;
 	}
 	require('functions.php');
-	if(isset($_POST['name']) AND is_numeric($sid)) {
-		$insert = dbupdate($_POST['name'], $_POST['provider'], $_POST['city'], $_POST['state'], $_POST['country'], $_POST['datacenter'], $_POST['cost'], $_POST['cycle'], $_POST['start'], $_POST['due'], $_POST['ram'], $_POST['swap'], $_POST['cpu'], $_POST['cpunum'], $_POST['cpuclock'], $_POST['bw'], $_POST['port'], $_POST['disk'], $_POST['disktype'], $_POST['ipv4'], $_POST['ipv6'], $_POST['notes'], $_POST['services'],$sid);
-		if ($insert == true) {
-			echo "<div style=\"width:100%;text-align:center;font-weight:bold;padding:10px 0;\">Success!</div>";
+	if(isset($_POST['import']) AND is_numeric($sid)) {
+		$import = $_POST['import'];
+		$arr = explode(',', $import);
+		$run = srvspecsimp($arr['0'],$arr['1'],$arr['2'],$arr['3'],$arr['4'],$arr['5'],$arr['6'],$arr['7'],$sid);
+		if ($run == true) {
+			echo "<div style=\"width:100%;text-align:center;font-weight:bold;padding:10px 0;\">Import Successful!</div>";
 		} else {
-			echo "<div style=\"width:100%;text-align:center;font-weight:bold;padding:10px 0;\">Failed.";
+			echo "<div style=\"width:100%;text-align:center;font-weight:bold;padding:10px 0;\">Import Failed.";
+		}
+	}
+	if(isset($_POST['name']) AND is_numeric($sid)) {
+		$run = dbupdate($_POST['name'], $_POST['provider'], $_POST['city'], $_POST['state'], $_POST['country'], $_POST['datacenter'], $_POST['cost'], $_POST['cycle'], $_POST['start'], $_POST['due'], $_POST['ram'], $_POST['swap'], $_POST['cpu'], $_POST['cpunum'], $_POST['cpuclock'], $_POST['bw'], $_POST['port'], $_POST['disk'], $_POST['disktype'], $_POST['ipv4'], $_POST['ipv6'], $_POST['notes'], $_POST['services'],$sid);
+		if ($run == true) {
+			echo "<div style=\"width:100%;text-align:center;font-weight:bold;padding:10px 0;\">Edit Success!</div>";
+		} else {
+			echo "<div style=\"width:100%;text-align:center;font-weight:bold;padding:10px 0;\">Edit Failed.";
 		}
 	}
 	$db = new SQLite3('ktoys.db3');
@@ -112,6 +122,11 @@ if (!file_exists($filename)) {
 	</table>
 	<i>Don't leave anything blank.</i>
 	<center><input name="editsrv" type="submit" value="Edit Service"></center>
+	</form>
+	<form name="form" method="post" action="<?php echo $_SERVER['PHP_SELF']."?id=".$sid; ?>">
+	Put the details in comma separated format using the following template (see README for details and export script):<br />ram,swap,cpu,cpunum,cpuclock,disk,ipv4,ipv6<br />
+	<input name="import" type="text" id="import" size="100" placeholder="ram,swap,cpu,cpunum,cpuclock,disk,ipv4,ipv6">
+	<center><input name="importsrv" type="submit" value="Import Service Specs"></center>
 	</form>
     </div>
 	<div style="clear: both;"></div>

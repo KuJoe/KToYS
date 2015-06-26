@@ -56,6 +56,36 @@ function dbinsert($name, $provider, $city, $state, $country, $datacenter, $cost,
 	}
 }
 
+function srvimport($name, $provider, $city, $state, $country, $datacenter, $cost, $cycle, $start, $due, $bw, $port, $disktype) {
+	$required_fields = array('name', 'provider', 'city', 'state', 'country', 'datacenter', 'cost', 'cycle', 'start', 'due', 'bw', 'port', 'disktype');
+	$valid = true;
+	foreach ($required_fields as $f) {
+		if (!isset($f)) {
+			$valid = false;
+		}
+	}
+	if($valid) {
+		$name = sqlite_escape_string($name);
+		$provider = sqlite_escape_string($provider);
+		$city = sqlite_escape_string($city);
+		$state = sqlite_escape_string($state);
+		$country = sqlite_escape_string($country);
+		$datacenter = sqlite_escape_string($datacenter);
+		$cost = sqlite_escape_string($cost);
+		$cycle = sqlite_escape_string($cycle);
+		$start = sqlite_escape_string($start);
+		$due = sqlite_escape_string($due);
+		$bw = sqlite_escape_string($bw);
+		$port = sqlite_escape_string($port);
+		$disktype = sqlite_escape_string($disktype);
+		$db = new SQLite3('ktoys.db3');
+		$db->exec("INSERT INTO services (name, provider, city, state, country, datacenter, cost, cycle, start, due, bw, port, disktype) VALUES ('$name', '$provider', '$city', '$state', '$country', '$datacenter', '$cost', '$cycle', '$start', '$due', '$bw', '$port', '$disktype')");
+		return true;
+	} else {
+		return false;
+	}
+}
+
 function dbupdate($name, $provider, $city, $state, $country, $datacenter, $cost, $cycle, $start, $due, $ram, $swap, $cpu, $cpunum, $cpuclock, $bw, $port, $disk, $disktype, $ipv4, $ipv6, $notes, $services, $sid) {
 	$required_fields = array('name', 'provider', 'city', 'state', 'country', 'datacenter', 'cost', 'cycle', 'start', 'due', 'ram', 'swap', 'cpu', 'cpunum', 'cpuclock', 'bw', 'port', 'disk', 'disktype', 'ipv4', 'ipv6', 'notes', 'services', 'sid');
 	$valid = true;
@@ -91,6 +121,32 @@ function dbupdate($name, $provider, $city, $state, $country, $datacenter, $cost,
 		$services = sqlite_escape_string($services);
 		$db = new SQLite3('ktoys.db3');
 		$db->exec("UPDATE services SET name = '$name', provider = '$provider', city = '$city', state = '$state', country = '$country', datacenter = '$datacenter', cost = '$cost', cycle = '$cycle', start = '$start', due = '$due', ram = '$ram', swap = '$swap', cpu = '$cpu', cpunum = '$cpunum', cpuclock = '$cpuclock', bw = '$bw', port = '$port', disk = '$disk', disktype = '$disktype', ipv4 = '$ipv4', ipv6 = '$ipv6', notes = '$notes', services = '$services' WHERE sid = '$sid'");
+		return true;
+	} else {
+		return false;
+	}
+}
+
+function srvspecsimp($ram,$swap,$cpu,$cpunum,$cpuclock,$disk,$ipv4,$ipv6,$sid) {
+	$required_fields = array('ram', 'swap', 'cpu', 'cpunum', 'cpuclock', 'disk', 'ipv4', 'ipv6', 'sid');
+	$valid = true;
+	foreach ($required_fields as $f) {
+		if (!isset($f)) {
+			$valid = false;
+		}
+	}
+	if($valid) {
+		$sid = sqlite_escape_string($sid);
+		$ram = sqlite_escape_string($ram);
+		$swap = sqlite_escape_string($swap);
+		$cpu = sqlite_escape_string($cpu);
+		$cpunum = sqlite_escape_string($cpunum);
+		$cpuclock = sqlite_escape_string($cpuclock);
+		$disk = sqlite_escape_string($disk);
+		$ipv4 = sqlite_escape_string($ipv4);
+		$ipv6 = sqlite_escape_string($ipv6);
+		$db = new SQLite3('ktoys.db3');
+		$db->exec("UPDATE services SET ram = '$ram', swap = '$swap', cpu = '$cpu', cpunum = '$cpunum', cpuclock = '$cpuclock', disk = '$disk', ipv4 = '$ipv4', ipv6 = '$ipv6' WHERE sid = '$sid'");
 		return true;
 	} else {
 		return false;

@@ -55,6 +55,13 @@ a:hover {
 	font-size:1.1em;
 	padding-top:5px;
 	padding-bottom:4px;
-	background: #000000 url(./thead_bg.gif) bottom left repeat-x;
+	background: #000000 bottom left repeat-x;
 	color:#ffffff;
+}
+
+.view-messages {
+	width:100%;
+	text-align:center;
+	font-weight:bold;
+	padding:10px 0;
 }

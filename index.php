@@ -53,17 +53,18 @@ if (isset($_POST["type"]) && htmlspecialchars($_POST["type"]) == "json", ENT_QUO
 } else {
 	//report HTML data
 ?>
+<!DOCTYPE html>
 <html>
 <head>
 	<link href="./style.css" rel="stylesheet">
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
-	<script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
+	<script src="//code.jquery.com/jquery.min.js"></script>
 	<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 	<!--[if lt IE 9]>
-	  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+		<script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
 	<![endif]-->
 	<script>
-		$(document).ready(function() {
+		$(function() {
 			$("input:checkbox:not(:checked)").each(function() {
 				var column = "table ." + $(this).attr("name");
 				$(column).hide();

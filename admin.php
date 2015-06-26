@@ -15,22 +15,19 @@ if (!file_exists($filename)) {
     die('Database does not exist. Run the installer again.');
 }
 ?>
+<!DOCTYPE html>
 <html>
 <head>
 	<link href="./style.css" rel="stylesheet">
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
-	<script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
+	<script src="//code.jquery.com/jquery.min.js"></script>
 	<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 	<!--[if lt IE 9]>
-	  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+		<script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
 	<![endif]-->
 	<script>
 	$(function() {
 		$( "#startdate" ).datepicker();
-	});
-	</script>
-	<script>
-	$(function() {
 		$( "#duedate" ).datepicker();
 	});
 	</script>
@@ -47,25 +44,25 @@ if (!file_exists($filename)) {
 		$arr = explode(',', $import);
 		$run = srvimport($arr['0'],$arr['1'],$arr['2'],$arr['3'],$arr['4'],$arr['5'],$arr['6'],$arr['7'],$arr['8'],$arr['9'],$arr['10'],$arr['11'],$arr['12'],$arr['13']);
 		if ($run == true) {
-			echo "<div style=\"width:100%;text-align:center;font-weight:bold;padding:10px 0;\">Import Successful!</div>";
+			echo "<div class=\"view-messages\">Import Successful!</div>";
 		} else {
-			echo "<div style=\"width:100%;text-align:center;font-weight:bold;padding:10px 0;\">Import Failed.";
+			echo "<div class=\"view-messages\">Import Failed.</div>";
 		}
 	}
 	if(isset($_POST['name'])) {
 		$run = dbinsert($_POST['name'], $_POST['provider'], $_POST['city'], $_POST['state'], $_POST['country'], $_POST['datacenter'], $_POST['cost'], $_POST['cycle'], $_POST['start'], $_POST['due'], $_POST['ram'], $_POST['swap'], $_POST['cpu'], $_POST['cpunum'], $_POST['cpuclock'], $_POST['bw'], $_POST['port'], $_POST['disk'], $_POST['disktype'], $_POST['ipv4'], $_POST['ipv6'], $_POST['notes'], $_POST['services']);
 		if ($run == true) {
-			echo "<div style=\"width:100%;text-align:center;font-weight:bold;padding:10px 0;\">Creation Successful!</div>";
+			echo "<div class=\"view-messages\">Creation Successful!</div>";
 		} else {
-			echo "<div style=\"width:100%;text-align:center;font-weight:bold;padding:10px 0;\">Creation Failed. Please make sure all fields are filled out.";
+			echo "<div class=\"view-messages\">Creation Failed. Please make sure all fields are filled out.</div>";
 		}
 	}
 	if(isset($_POST['delsid']) AND is_numeric($_POST['delsid'])) {
 		$delete = dbdel($_POST['delsid']);
 		if ($delete == true) {
-			echo "<div style=\"width:100%;text-align:center;font-weight:bold;padding:10px 0;\">Success!</div>";
+			echo "<div class=\"view-messages\">Success!</div>";
 		} else {
-			echo "<div style=\"width:100%;text-align:center;font-weight:bold;padding:10px 0;\">Failed.";
+			echo "<div class=\"view-messages\">Failed.</div>";
 		}
 	}
 ?>

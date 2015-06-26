@@ -26,7 +26,7 @@ $result = $db->query('SELECT * FROM services') or die('Query failed');
 *
 * eg: POST http://www.example.com/ktoys/index.php?type=json
 */
-if (isset($_POST["type"]) && htmlspecialchars($_POST["type"]) == "json", ENT_QUOTES, "UTF-8") {
+if (isset($_POST["type"]) && htmlspecialchars($_POST["type"], ENT_QUOTES, "UTF-8") == "json") {
 	//report JSON data
 
 	$dataArray = array();
@@ -36,8 +36,8 @@ if (isset($_POST["type"]) && htmlspecialchars($_POST["type"]) == "json", ENT_QUO
 		
 		//insert details accordingly
 		$row[$i][] = $res;
-		$row[$i]['location'] = $row['city'] . ", " . $row['state'] ", " . $row['country'];
-		$row[$i]['cpu'] = $row['cpu'] . " @" . $row['cpuclock'] " (x" . $row['cpunum'] . ")";
+		$row[$i]['location'] = $row['city'] . ", " . $row['state'] . ", " . $row['country'];
+		$row[$i]['cpu'] = $row['cpu'] . " @" . $row['cpuclock'] . " (x" . $row['cpunum'] . ")";
 		//new lines insertion
 		$row[$i]['ipv4'] = nl2br($row['ipv4']);
 		$row[$i]['ipv6'] = nl2br($row['ipv6']);

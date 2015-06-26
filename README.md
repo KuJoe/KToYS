@@ -2,13 +2,20 @@ Simple PHP and SQLite3 script for **K**eeping **T**rack **o**f **Y**our hosting,
 Version 1.6 by KuJoe (JMD.cc)<br />
 
 1.1 - Fixed bug where SQLite3 database was being held open preventing updating from view.php<br />
+<br />
 1.2 - Some security fixes in case somebody leaves this in a public directory or doesn't know what HTML is.<br />
+<br />
 1.3 - Viewing the index.php page automatically checks and updates the Due Date for each service (I apologize ahead of time for those order services on the 29th, 30th, or 31st of a month and my logic doesn't work properly for you).<br />
       Adjusted the default checked boxes on index.php to show the Due Date column and remove the Added and Updated columns.<br />
 	  The Due Date cell is highlighted yellow if the due date is this month.<br />
-1.4 - Added new field for services (i.e. HTTP, DNS, MySQL, SSH, etc...) as requested by Cronus89.
-1.5 - Added the ability to retrieve data using JSON (contributed by GIANTCRAB).
-1.6 - Added an import feature to make it easier to add and update services (see additional info below).
+<br />
+1.4 - Added new field for services (i.e. HTTP, DNS, MySQL, SSH, etc...) as requested by Cronus89.<br />
+<br />
+1.5 - Added the ability to retrieve data using JSON (contributed by GIANTCRAB).<br />
+<br />
+1.6 - Added an import feature to make it easier to add and update services (see additional info below).<br />
+      Code clean up by GIANTCRAB.<br />
+<br />
 
 //Demo<br />
 Demo: http://iam.clouded.us/ktoys/index.php

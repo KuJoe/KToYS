@@ -19,11 +19,10 @@ $db = new SQLite3('ktoys.db3');
 $result = $db->query('SELECT * FROM services') or die('Query failed');
 $arr = array();
 while ($row = $result->fetchArray()) {
-	$arr[] = $row['sid'];
+    $arr[] = $row['sid'];
 }
 $db->close();
 foreach ($arr as $value) {
     chkDueDate($value);
 }
 echo "Completed";
-?>

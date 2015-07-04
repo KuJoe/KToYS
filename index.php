@@ -17,7 +17,7 @@ if (!file_exists($filename)) {
 
 //grab database information
 $db = new SQLite3('ktoys.db3');
-$result = $db->query('SELECT * FROM services') or die('Query failed');
+$result = $db->query('SELECT * FROM services ORDER BY name ASC') or die('Query failed');
 
 /*
 * check if it is a request for JSON data

@@ -25,5 +25,4 @@ $db->close();
 foreach ($arr as $value) {
     chkDueDate($value);
 }
-echo "Completed";
 ?>

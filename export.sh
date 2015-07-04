@@ -1,4 +1,3 @@
-#!/bin/bash
 ram=`free -m | grep "Mem" | awk '{print $2}'`
 swap=`free -m | grep "Swap" | awk '{print $2}'`
 cpu=`cat /proc/cpuinfo | grep "model name" | head -n 1 | sed -r 's/^.{13}//' | tr -s " "`

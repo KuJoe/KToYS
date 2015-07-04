@@ -1,5 +1,5 @@
 Simple PHP and SQLite3 script for **K**eeping **T**rack **o**f **Y**our hosting, VPS, and dedicated **S**ervices.<br />
-Version 1.6 by KuJoe (JMD.cc)<br />
+Version 1.7 by KuJoe (JMD.cc)<br />
 
 1.1 - Fixed bug where SQLite3 database was being held open preventing updating from view.php<br />
 <br />
@@ -15,6 +15,7 @@ Version 1.6 by KuJoe (JMD.cc)<br />
 <br />
 1.6 - Added an import feature to make it easier to add and update services (see additional info below).<br />
       Code clean up by GIANTCRAB.<br />
+1.7 - Added sorting to index.php and removed echo from job.php<br />	  
 <br />
 
 //Demo<br />
